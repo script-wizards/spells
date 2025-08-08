@@ -31,6 +31,7 @@ func init() {
 	rootCmd.Flags().BoolVar(&showVersion, "version", false, "show version")
 	
 	rootCmd.AddCommand(initCmd)
+	rootCmd.AddCommand(trackCmd)
 }
 
 func main() {

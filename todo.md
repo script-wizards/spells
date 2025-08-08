@@ -31,7 +31,7 @@
 
 ## 6 — TUI Foundation
 
-- [ ] **T1**  Bubbletea program skeleton with placeholder panes, clean exit
+- [x] **T1**  Bubbletea program skeleton with placeholder panes, clean exit
 
 ## 7 — Session Engine
 
