@@ -4,9 +4,9 @@
 
 ## 1 — Repository Bootstrap
 
-- [ ] **R1**  `go mod init`, `.gitignore`, MIT license
-- [ ] **R2**  Makefile: `build`, `test`, `lint` targets
-- [ ] **R3**  GitHub Actions: Go 1.22 CI matrix, fail on `go vet` warnings
+- [x] **R1**  `go mod init`, `.gitignore`, MIT license
+- [x] **R2**  Makefile: `build`, `test`, `lint` targets
+- [x] **R3**  GitHub Actions: Go 1.22 CI matrix, fail on `go vet` warnings
 
 ## 2 — Configuration Layer
 
@@ -80,4 +80,3 @@
 - [ ] Static builds for additional OS/ARCH
 - [ ] Homebrew tap formula
 - [ ] GitHub Release Action producing checksums & artifacts
-
