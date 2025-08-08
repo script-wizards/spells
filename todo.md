@@ -54,8 +54,8 @@
 
 ## 11 — File‑Watch Import
 
-- [ ] **W1**  fsnotify watcher on `*.md`, debounce 250 ms
-- [ ] **W2**  Front‑matter YAML → NPC struct converter unit test
+- [x] **W1**  fsnotify watcher on `*.md`, debounce 250 ms
+- [x] **W2**  Front‑matter YAML → NPC struct converter unit test
 
 ## 12 — Content Generation Commands
 
