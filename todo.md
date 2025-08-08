@@ -49,7 +49,7 @@
 ## 10 — Oracle System
 
 - [ ] **O1**  PEG parser for table syntax; parse smoke test
-- [ ] **O2**  Dice roller `Roll("2d6+1")` deterministic seed test
+- [x] **O2**  Dice roller `Roll("2d6+1")` deterministic seed test
 - [ ] **O3**  Resolve single‑level table with mock data test
 
 ## 11 — File‑Watch Import
