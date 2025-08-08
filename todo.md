@@ -39,7 +39,7 @@
 
 ## 8 — Fuzzy Search
 
-- [ ] **S1**  Trigram index builder & query function with ranked output
+- [x] **S1**  Trigram index builder & query function with ranked output
 
 ## 9 — Initiative Tracker
 
