@@ -32,6 +32,7 @@ func init() {
 
 	rootCmd.AddCommand(initCmd)
 	rootCmd.AddCommand(trackCmd)
+	rootCmd.AddCommand(oracleCmd)
 }
 
 func main() {

@@ -1,0 +1,62 @@
+{
+package oracle
+
+import "strconv"
+}
+
+Start
+    = expr:Expression EOF { return expr, nil }
+
+Expression
+    = parts:(Choice / Table / Dice / Text)* { 
+        result := make([]interface{}, len(parts.([]interface{})))
+        for i, part := range parts.([]interface{}) {
+            result[i] = part
+        }
+        return result, nil
+    }
+
+Choice
+    = "{" _ first:ChoiceItem _ rest:( "|" _ item:ChoiceItem _ { return item, nil } )* "}" {
+        items := []string{first.(string)}
+        for _, r := range rest.([]interface{}) {
+            items = append(items, r.(string))
+        }
+        return Choice{Options: items}, nil
+    }
+
+ChoiceItem
+    = chars:( !( "|" / "}" ) . )+ {
+        return string(c.text), nil
+    }
+
+Table
+    = "[" name:TableName "]" {
+        return Table{Name: name.(string)}, nil
+    }
+
+TableName
+    = chars:( !"]" . )+ {
+        return string(c.text), nil
+    }
+
+Dice
+    = count:Integer "d" sides:Integer {
+        return Dice{Count: count.(int), Sides: sides.(int)}, nil
+    }
+
+Text
+    = chars:( !( "{" / "[" / Dice ) . )+ {
+        return Text{Value: string(c.text)}, nil
+    }
+
+Integer
+    = [0-9]+ {
+        return strconv.Atoi(string(c.text))
+    }
+
+_
+    = [ \t\n\r]*
+
+EOF
+    = !.
