@@ -10,8 +10,8 @@
 
 ## 2 — Configuration Layer
 
-- [ ] **C1**  Path resolver: `$XDG_CONFIG_HOME/spells` fallback to `~/.config/spells`
-- [ ] **C2**  Load + merge global YAML into struct with defaults test
+- [x] **C1**  Path resolver: `$XDG_CONFIG_HOME/spells` fallback to `~/.config/spells`
+- [x] **C2**  Load + merge global YAML into struct with defaults test
 
 ## 3 — Database Core
 
