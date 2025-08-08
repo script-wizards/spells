@@ -26,8 +26,8 @@
 
 ## 5 — CLI Skeleton
 
-- [ ] **L1**  Cobra root `spells`, global `--config` flag
-- [ ] **L2**  `init` sub‑command: create empty DB + default config
+- [x] **L1**  Cobra root `spells`, global `--config` flag
+- [x] **L2**  `init` sub‑command: create empty DB + default config
 
 ## 6 — TUI Foundation
 

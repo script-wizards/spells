@@ -29,6 +29,8 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.Flags().StringVar(&config, "config", "", "config file")
 	rootCmd.Flags().BoolVar(&showVersion, "version", false, "show version")
+	
+	rootCmd.AddCommand(initCmd)
 }
 
 func main() {
