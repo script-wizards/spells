@@ -15,6 +15,7 @@ type Mode int
 const (
 	NormalMode Mode = iota
 	SearchMode
+	AddCombatantMode
 )
 
 type Model struct {
@@ -25,6 +26,8 @@ type Model struct {
 	searchQuery   string
 	searchIndex   search.Index
 	searchResults []model.NPC
+	encounter     *model.Encounter
+	combatants    []model.Combatant
 }
 
 func NewModel(eng *engine.Engine, sessionID int64) (Model, error) {
@@ -40,6 +43,13 @@ func NewModel(eng *engine.Engine, sessionID int64) (Model, error) {
 	}
 	searchIndex := search.BuildIndex(npcNames)
 
+	encounter, _ := model.GetActiveEncounter(eng.DB, sessionID)
+
+	var combatants []model.Combatant
+	if encounter != nil {
+		combatants, _ = model.ListActiveBySort(eng.DB, encounter.ID)
+	}
+
 	m := Model{
 		engine:      eng,
 		session:     session,
@@ -47,6 +57,8 @@ func NewModel(eng *engine.Engine, sessionID int64) (Model, error) {
 		mode:        NormalMode,
 		searchQuery: "",
 		searchIndex: searchIndex,
+		encounter:   encounter,
+		combatants:  combatants,
 	}
 
 	if eng.EventBus != nil {
@@ -83,6 +95,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 						m.mode = SearchMode
 						m.searchQuery = ""
 						m.searchResults = nil
+					case "i":
+						m.mode = AddCombatantMode
 					}
 				}
 			}
@@ -106,6 +120,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.searchQuery += string(msg.Runes)
 					m.updateSearchResults()
 				}
+			}
+		case AddCombatantMode:
+			switch msg.Type {
+			case tea.KeyCtrlC:
+				return m, tea.Quit
+			case tea.KeyEsc:
+				m.mode = NormalMode
 			}
 		}
 	}
@@ -136,14 +157,15 @@ func (m Model) View() string {
 	view.WriteString("Spells Tracking TUI\n\n")
 	view.WriteString(turnInfo + "\n\n")
 
-	if m.mode == SearchMode {
+	switch m.mode {
+	case SearchMode:
 		view.WriteString("Search Mode (ESC to exit, Enter to select)\n")
 		view.WriteString(fmt.Sprintf("Query: %s\n\n", m.searchQuery))
 
 		if len(m.searchResults) > 0 {
 			view.WriteString("NPCs found:\n")
 			for i, npc := range m.searchResults {
-				if i >= 5 { // Only show top 5
+				if i >= 5 {
 					break
 				}
 				location := ""
@@ -155,12 +177,39 @@ func (m Model) View() string {
 		} else if m.searchQuery != "" {
 			view.WriteString("No NPCs found.\n")
 		}
-	} else {
-		view.WriteString("Placeholder panes:\n")
+	case AddCombatantMode:
+		view.WriteString("Add Combatant Modal (ESC to exit)\n")
+		view.WriteString("This is a stub - implementation pending\n")
+	default:
+		view.WriteString("Initiative Order:\n")
+		if len(m.combatants) > 0 {
+			for i, combatant := range m.combatants {
+				hpDisplay := "Unknown HP"
+				if combatant.HPCurrent != nil && combatant.HPMax != nil {
+					hpDisplay = fmt.Sprintf("%d/%d HP", *combatant.HPCurrent, *combatant.HPMax)
+				} else if combatant.HPMax != nil {
+					hpDisplay = fmt.Sprintf("?/%d HP", *combatant.HPMax)
+				}
+
+				npcIndicator := ""
+				if combatant.IsNPC {
+					npcIndicator = " (NPC)"
+				}
+
+				view.WriteString(fmt.Sprintf("  %d. %s - Init %d - %s%s\n",
+					i+1, combatant.Name, combatant.Initiative, hpDisplay, npcIndicator))
+			}
+		} else if m.encounter != nil {
+			view.WriteString("  No combatants in active encounter\n")
+		} else {
+			view.WriteString("  No active encounter\n")
+		}
+
+		view.WriteString("\nOther panes:\n")
 		view.WriteString("- Sessions\n")
 		view.WriteString("- Characters\n")
 		view.WriteString("- Spells\n\n")
-		view.WriteString("Press '/' for NPC search, Space to advance turn, Ctrl+C to quit")
+		view.WriteString("Press '/' for NPC search, 'i' to add combatant, Space to advance turn, Ctrl+C to quit")
 	}
 
 	return view.String()

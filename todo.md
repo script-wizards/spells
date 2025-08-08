@@ -43,8 +43,8 @@
 
 ## 9 — Initiative Tracker
 
-- [ ] **I1**  `initiative_order` DAO + tests
-- [ ] **I2**  TUI pane rendering list from DAO mock
+- [x] **I1**  `initiative_order` DAO + tests
+- [x] **I2**  TUI pane rendering list from DAO mock
 
 ## 10 — Oracle System
 
