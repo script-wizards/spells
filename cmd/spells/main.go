@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spf13/cobra"
 	"github.com/script-wizards/spells/internal/version"
+	"github.com/spf13/cobra"
 )
 
 var (
-	config     string
+	config      string
 	showVersion bool
 )
 
@@ -29,7 +29,7 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.Flags().StringVar(&config, "config", "", "config file")
 	rootCmd.Flags().BoolVar(&showVersion, "version", false, "show version")
-	
+
 	rootCmd.AddCommand(initCmd)
 	rootCmd.AddCommand(trackCmd)
 }

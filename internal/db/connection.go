@@ -13,7 +13,7 @@ var migrationFS embed.FS
 
 func Open(path string) (*sqlx.DB, error) {
 	dsn := fmt.Sprintf("%s?_pragma=journal_mode(WAL)&_pragma=busy_timeout(5000)", path)
-	
+
 	db, err := sqlx.Open("sqlite", dsn)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open database: %w", err)

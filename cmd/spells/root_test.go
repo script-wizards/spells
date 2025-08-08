@@ -11,7 +11,7 @@ func TestVersionFlag(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to run spells --version: %v", err)
 	}
-	
+
 	expected := "dev\n"
 	actual := string(output)
 	if actual != expected {

@@ -37,16 +37,16 @@ func (s *Session) AdvanceTurn(tx *sqlx.Tx, delta int64) error {
 	if err != nil {
 		return fmt.Errorf("failed to advance turn: %w", err)
 	}
-	
+
 	rowsAffected, err := result.RowsAffected()
 	if err != nil {
 		return fmt.Errorf("failed to get rows affected: %w", err)
 	}
-	
+
 	if rowsAffected == 0 {
 		return fmt.Errorf("session with id %d not found", s.ID)
 	}
-	
+
 	s.CurrentTurn += delta
 	return nil
 }

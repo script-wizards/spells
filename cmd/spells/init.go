@@ -5,9 +5,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/spf13/cobra"
 	configpkg "github.com/script-wizards/spells/internal/config"
 	"github.com/script-wizards/spells/internal/db"
+	"github.com/spf13/cobra"
 )
 
 var initCmd = &cobra.Command{
@@ -16,7 +16,7 @@ var initCmd = &cobra.Command{
 	Long:  "Initialize a new spells campaign database with default configuration",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		path, _ := cmd.Flags().GetString("path")
-		
+
 		// Open/create the database
 		database, err := db.Open(path)
 		if err != nil {

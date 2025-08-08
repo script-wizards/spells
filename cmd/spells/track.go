@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/spf13/cobra"
 	"github.com/script-wizards/spells/internal/db"
 	"github.com/script-wizards/spells/internal/tui"
+	"github.com/spf13/cobra"
 )
 
 var trackCmd = &cobra.Command{
@@ -15,7 +15,7 @@ var trackCmd = &cobra.Command{
 	Long:  "Launch the terminal user interface for tracking spells and sessions",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		path, _ := cmd.Flags().GetString("path")
-		
+
 		// Open the database
 		database, err := db.Open(path)
 		if err != nil {
@@ -26,7 +26,7 @@ var trackCmd = &cobra.Command{
 		// Create and start the TUI
 		model := tui.Model{}
 		program := tea.NewProgram(model)
-		
+
 		if _, err := program.Run(); err != nil {
 			return fmt.Errorf("failed to start TUI: %w", err)
 		}

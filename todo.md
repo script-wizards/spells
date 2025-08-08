@@ -35,7 +35,7 @@
 
 ## 7 — Session Engine
 
-- [ ] **E1**  Turn‑advance service emitting `TurnAdvanced` event + unit test
+- [x] **E1**  Turn‑advance service emitting `TurnAdvanced` event + unit test
 
 ## 8 — Fuzzy Search
 
