@@ -67,7 +67,7 @@
 
 ## 14 — Packaging & Release
 
-- [ ] **P1**  `go build -ldflags "-s -w"` produce <10 MB binary test
+- [x] **P1**  `go build -ldflags "-s -w"` produce <10 MB binary test
 
 ## 15 — Performance & Fuzz Tests
 

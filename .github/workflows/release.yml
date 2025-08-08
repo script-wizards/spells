@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+
+      - name: Extract tag
+        id: tag
+        run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Build for linux/amd64
+        run: |
+          GOOS=linux GOARCH=amd64 go build -ldflags "-s -w -X github.com/script-wizards/spells/internal/version.Version=${{ steps.tag.outputs.TAG }}" -o spells-linux-amd64 ./cmd/spells
+
+      - name: Build for darwin/arm64
+        run: |
+          GOOS=darwin GOARCH=arm64 go build -ldflags "-s -w -X github.com/script-wizards/spells/internal/version.Version=${{ steps.tag.outputs.TAG }}" -o spells-darwin-arm64 ./cmd/spells
+
+      - name: Generate SHA256 checksums
+        run: |
+          sha256sum spells-linux-amd64 > SHA256SUMS
+          sha256sum spells-darwin-arm64 >> SHA256SUMS
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            spells-linux-amd64
+            spells-darwin-arm64
+            SHA256SUMS
