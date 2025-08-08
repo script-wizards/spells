@@ -15,9 +15,9 @@
 
 ## 3 — Database Core
 
-- [ ] **D1**  Embed `migrations/*.sql` via `embed.FS`
-- [ ] **D2**  `Open()` helper returning `*sqlx.DB`, enable WAL, busy timeout
-- [ ] **D3**  `migrate.Up()` idempotence test
+- [x] **D1**  Embed `migrations/*.sql` via `embed.FS`
+- [x] **D2**  `Open()` helper returning `*sqlx.DB`, enable WAL, busy timeout
+- [x] **D3**  `migrate.Up()` idempotence test
 
 ## 4 — Domain Models & CRUD
 

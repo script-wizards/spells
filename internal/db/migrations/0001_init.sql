@@ -1,0 +1,1 @@
+CREATE TABLE schema_version (id int);
