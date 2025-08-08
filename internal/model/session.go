@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/script-wizards/spells/internal/db"
 )
 
 type Session struct {
@@ -14,7 +15,7 @@ type Session struct {
 
 func (s *Session) Create(tx *sqlx.Tx) error {
 	query := "INSERT INTO sessions (current_turn) VALUES (?) RETURNING id"
-	row := tx.QueryRow(query, s.CurrentTurn)
+	row := db.RetryableQueryRow(tx, query, s.CurrentTurn)
 	return row.Scan(&s.ID)
 }
 
@@ -33,7 +34,7 @@ func GetSession(db *sqlx.DB, id int64) (*Session, error) {
 
 func (s *Session) AdvanceTurn(tx *sqlx.Tx, delta int64) error {
 	query := "UPDATE sessions SET current_turn = current_turn + ? WHERE id = ?"
-	result, err := tx.Exec(query, delta, s.ID)
+	result, err := db.RetryableExec(tx, query, delta, s.ID)
 	if err != nil {
 		return fmt.Errorf("failed to advance turn: %w", err)
 	}

@@ -63,7 +63,7 @@
 
 ## 13 — Multi‑Process State Sharing
 
-- [ ] **S2**  Concurrent write test: two processes advance turn without corruption
+- [x] **S2**  Concurrent write test: two processes advance turn without corruption
 
 ## 14 — Packaging & Release
 
