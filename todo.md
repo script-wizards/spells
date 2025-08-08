@@ -21,7 +21,7 @@
 
 ## 4 — Domain Models & CRUD
 
-- [ ] **M1**  `sessions` DAO with Create / Get / AdvanceTurn + unit tests
+- [x] **M1**  `sessions` DAO with Create / Get / AdvanceTurn + unit tests
 - [ ] **M2**  `npcs` DAO with search stub
 
 ## 5 — CLI Skeleton
