@@ -86,7 +86,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, tea.Quit
 			case tea.KeySpace:
 				if m.engine != nil && m.sessionID > 0 {
-					m.engine.Advance(m.sessionID, 1)
+					err := m.engine.Advance(m.sessionID, 1)
+					if err == nil && m.session != nil {
+						m.session.CurrentTurn += 1
+					}
 				}
 			default:
 				if msg.Type == tea.KeyRunes {

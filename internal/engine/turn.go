@@ -2,7 +2,6 @@ package engine
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/script-wizards/spells/internal/model"
@@ -39,7 +38,6 @@ func (e *Engine) Advance(sessionID int64, delta int64) error {
 	}
 
 	newTurn := oldTurn + delta
-	log.Printf("TURN_ADVANCED %d→%d", oldTurn, newTurn)
 
 	if e.EventBus != nil {
 		e.EventBus.Emit(TurnAdvanced{
